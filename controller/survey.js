@@ -99,28 +99,4 @@ exports.fechanswers = (req, res, next) => {
     // });
   });
 };
-exports.view = (req, res, next) => {
-  Survey.findOne({
-    where: {
-      url: req.body.url,
-    },
-  })
-    .then((data) => {
-      const surveyid = data.id;
-      Question.findAll({
-        where: {
-          surveyId: surveyid,
-        },
-      })
-        .then((questions) => {
-          return res.json(questions);
-          next();
-        })
-        .catch((e) => {
-          return res.json({ msg: "Questions fetched failed" });
-        });
-    })
-    .catch((e) => {
-      return res.json({ msg: "Survey fetched failed" });
-    });
-};
+
