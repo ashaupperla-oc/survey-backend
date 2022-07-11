@@ -9,6 +9,7 @@ var randomWords = require("random-words");
 exports.create = (req, res, next) => {
   console.log("survey create sserver", req.body);
   console.log("number of questionsin a survey", req.body.length);
+
   // if (req.body.questionsList.length === 0) { //with this getting the headers cannot be send after request sent error
   if (req.body.length === 0) {
     return res.json({ status: 500, error: "no question selected" });
