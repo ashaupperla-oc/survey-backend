@@ -56,6 +56,7 @@ exports.delete = (req, res, next) => {
 };
 
 exports.viewallsurvey = (req, res, next) => {
+
   Survey.findAll()
     .then((surveys) => {
       return res.json(surveys);
