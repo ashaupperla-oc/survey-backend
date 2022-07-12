@@ -26,6 +26,7 @@ exports.create = (req, res, next) => {
           Answer.create(answer_value);
         });
       });
+
     } else {
       console.log(data.id);
       req.body.forEach((answer) => {
