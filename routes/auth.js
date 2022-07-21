@@ -5,9 +5,8 @@ module.exports = (api) => {
   const jwt = require("jsonwebtoken");
 
   var router = require("express").Router();
-  // login route
+
   router.post("/login", function (req, res) {
-    console.log(req.body);
     User.findOne({ where: { email: req.body.email } }).then((data) => {
       if (data) {
         if (
@@ -20,7 +19,7 @@ module.exports = (api) => {
 
             userId: data.id,
             token: token,
-            msg: "logged in and and some some",
+            msg: "successfully logged in",
           });
         } else
           return res.status(200).json({
@@ -36,8 +35,6 @@ module.exports = (api) => {
       }
     });
   });
-  router.post("/register", authController.register);
 
-  // catefories the url of api
   api.use("/api/auth", router);
 };
