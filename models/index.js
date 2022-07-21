@@ -27,5 +27,16 @@ db.answers = require("./answer.model.js")(sequelize, Sequelize);
 db.clients = require("./client.model.js")(sequelize, Sequelize);
 
 // db.users.hasOne(db.roles);
+db.questions.hasMany(db.answers, {
+  foreignKey: "questionId",
+  onDelete: "CASCADE",
+});
+db.answers.belongsTo(db.questions, { foreignKey: "questionId" });
+
+db.surveys.hasMany(db.questions, {
+  foreignKey: "surveyId",
+  onDelete: "CASCADE",
+});
+db.questions.belongsTo(db.surveys, { foreignKey: "surveyId" });
 
 module.exports = db;
