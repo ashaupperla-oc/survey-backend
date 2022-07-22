@@ -1,7 +1,7 @@
-require('dotenv').config();
+require("dotenv").config();
 
 module.exports = {
-  httpPort: process.env.HTTP_PORT || '8000',
+  httpPort: process.env.HTTP_PORT || "8000",
 
   database: {
     host: process.env.host || "localhost",
@@ -13,7 +13,7 @@ module.exports = {
       max: 5,
       min: 0,
       acquire: 30000,
-      idle: 10000
-    }
-  }
-}
+      idle: 10000,
+    },
+  },
+};

@@ -3,6 +3,7 @@ const { static, Router } = require("express");
 const api = Router();
 const config = require("../config");
 const session = require("express-session");
+
 const cors = require("cors");
 const bodyParser = require("body-parser");
 
@@ -17,6 +18,7 @@ api.use(
     extended: true,
   })
 );
+
 api.use(bodyParser.json());
 
 // database connect to mysql
@@ -25,14 +27,17 @@ const database = require("../models");
 
 database.sequelize.sync();
 
+
 // simple route
 api.get("/", (req, res) => {
   res.json({ message: "your server api" });
 });
 
+
 require("../routes/auth")(api);
 require("../routes/answer")(api);
 require("../routes/survey")(api);
 require("../routes/admin")(api);
+
 
 module.exports = api;
