@@ -13,7 +13,7 @@ module.exports = (api) => {
           req.body.password === data.password &&
           (data.roleId == 1 || data.roleId == 2)
         ) {
-          let token = jwt.sign({ userId: data.email }, "vueserver");
+          let token = jwt.sign({ userId: data.id }, "vueserver");
           return res.json({
             status: 200,
 
