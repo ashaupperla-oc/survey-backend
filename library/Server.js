@@ -1,12 +1,15 @@
+
 const ConfigFetcher = require("../config");
 const Express = require("express");
 // const Logger = require("./Logger");
 const http = require("http");
 const fs = require("fs");
+
 const path = require("path");
 const { ServerSocket } = require("socket.io");
 
 class Server {
+
   constructor() {
     // Load Config File
     this.config = ConfigFetcher;
@@ -31,6 +34,7 @@ class Server {
   build(token) {
     console.warn("Server is starting");
     console.log("Server started...");
+
     // this.https.listen(this.config.httpsPort, (data) =>
     //     this.log(`Web HTTPS Server has been started at ${this.config.httpsPort}`)
     // );

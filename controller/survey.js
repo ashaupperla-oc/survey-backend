@@ -20,6 +20,7 @@ exports.create = (req, res, next) => {
   //   return res.status(401).json({ msg: "Unauthorized" });
   // }
 
+
   const questionList = req.body.questionsList;
   const userId = req.body.userId;
   const surveyName = req.body.surveyName;
@@ -123,6 +124,7 @@ exports.delete = (req, res, next) => {
   //   return res.status(401).json({ msg: "Unauthorized" });
   // }
 
+
   Survey.destroy({
     where: { id: req.params.id },
   })
@@ -180,6 +182,7 @@ exports.view = (req, res, next) => {
   Survey.findOne({
     where: {
       id: req.params.surveyId,
+
     },
   })
     .then((data) => {

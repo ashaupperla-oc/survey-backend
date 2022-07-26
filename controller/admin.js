@@ -3,6 +3,7 @@ const User = database.users;
 const Survey = database.surveys;
 const Role = database.roles;
 const Op = database.Sequelize.Op;
+
 const jwt = require("jsonwebtoken");
 
 exports.getlist = (req, res, next) => {
@@ -23,6 +24,7 @@ exports.getlist = (req, res, next) => {
   // if (req.headers.userid != 1) {
   //   return res.status(400).json({ error: "user is not permitted" });
   // }
+
 
   User.findAll()
     .then((user) => {
@@ -48,6 +50,7 @@ exports.getAdmin = (req, res, next) => {
   // ) {
   //   return res.status(401).json({ msg: "Unauthorized" });
   // }
+
   User.findOne({
     where: { id: adminId },
   })
@@ -55,6 +58,7 @@ exports.getAdmin = (req, res, next) => {
       if (user == null) {
         return res.status(400).json({ msg: "admin not found" });
       }
+
       return res.status(200).json(user);
     })
     .catch((e) => {
@@ -80,6 +84,7 @@ exports.delete = (req, res, next) => {
   //   return res.status(401).json({ msg: "Unauthorized" });
   // }
 
+
   Survey.update(
     {
       userId: 1,
@@ -95,6 +100,7 @@ exports.delete = (req, res, next) => {
       where: { id: adminId },
     }).then((data) => {
       return res.status(200).json({ msg: "admin removed successfully" });
+
     });
   });
 };
@@ -117,6 +123,7 @@ exports.udpate = (req, res, next) => {
   //   return res.status(401).json({ msg: "Unauthorized" });
   // }
 
+
   User.update(
     {
       name: adminName,
@@ -130,6 +137,7 @@ exports.udpate = (req, res, next) => {
       if (data == 0) {
         return res.status(400).json({ msg: "admin not found" });
       }
+
       return res.status(200).json({ msg: "Admin Updated Successfully" });
     })
     .catch((error) => {
@@ -152,6 +160,7 @@ exports.passwordupdate = (req, res, next) => {
   // ) {
   //   return res.status(401).json({ msg: "Unauthorized" });
   // }
+
   console.log(req.body);
   const adminId = req.body.id;
   User.findOne({
@@ -230,6 +239,7 @@ exports.register = (req, res, next) => {
       })
       .catch((e) => {
         return res.status(400).json({ msg: "user registered failed" });
+
       });
   });
 };
