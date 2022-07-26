@@ -11,5 +11,6 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.JSON,
     },
   });
+
   return question;
 };

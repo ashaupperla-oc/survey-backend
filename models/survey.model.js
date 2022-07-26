@@ -10,9 +10,6 @@ module.exports = (sequelize, Sequelize) => {
         key: "id",
       },
     },
-    url: {
-      type: Sequelize.STRING,
-    },
   });
   return survey;
 };

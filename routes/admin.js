@@ -3,12 +3,12 @@ module.exports = (api) => {
 
   var router = require("express").Router();
 
-  router.get("/list", adminController.getlist);
+  router.get("/", adminController.getlist); //removed list
   router.put("/update", adminController.udpate);
   router.put("/updatepassword", adminController.passwordupdate);
-  router.delete("/delete/:id", adminController.delete);
-  router.get("/get/:id", adminController.getAdmin);
-  router.post("/register", adminController.register);
+  router.delete("/:id", adminController.delete); //done
+  router.get("/:id", adminController.getAdmin);
+  router.post("/register", adminController.register); //done
 
   api.use("/api/admin", router);
 };

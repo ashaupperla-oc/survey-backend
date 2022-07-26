@@ -6,13 +6,13 @@ module.exports = (api) => {
 
   router.put("/update", surveyController.update);
 
-  router.delete("/delete/:id", surveyController.delete);
+  router.delete("/:id", surveyController.delete);
 
-  router.get("/viewallsurvey", surveyController.viewallsurvey);
+  router.get("/", surveyController.viewallsurvey);
 
   router.post("/fechanswers", surveyController.fechanswers);
 
-  router.post("/view", surveyController.view);
+  router.get("/:surveyId", surveyController.view);
 
   // catefories the url of api
   api.use("/api/survey", router);
