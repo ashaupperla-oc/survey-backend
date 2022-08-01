@@ -17,7 +17,6 @@ jobs:
                 node-version: 16
             - run: npm install
             - run: npm run bundle
-            - run: npm test
             - name: Deploy to Server
               uses: easingthemes/ssh-deploy@v2.1.1
               env:
