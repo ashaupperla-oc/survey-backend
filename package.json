@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
     "bundle": "mkdir deploy && cp -r controller coverage express library models routes config.js prod.db.config.js server.js package.json package-lock.json survey-backend.service deploy && rm deploy/config.js && mv deploy/prod.db.config.js deploy/config.js"
 
   },
