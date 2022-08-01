@@ -1,6 +1,7 @@
-const Server = require('./library/Server');
+const app = require("./express");
+const Server = require("./library/Server");
 
-const server = new Server();
+const server = new Server(app);
 
 server.build();
 
