@@ -1,16 +1,13 @@
-
 const ConfigFetcher = require("../config");
 const Express = require("express");
 // const Logger = require("./Logger");
 const http = require("http");
 const fs = require("fs");
-
 const path = require("path");
 const { ServerSocket } = require("socket.io");
 
 class Server {
-
-  constructor() {
+  constructor(app) {
     // Load Config File
     this.config = ConfigFetcher;
 
@@ -19,14 +16,13 @@ class Server {
     //     key: fs.readFileSync('./cert/private.key', 'utf8'),
     //     cert: fs.readFileSync('./cert/certificate.crt', 'utf8')
     // };
-    this.server = Express();
     // this.http = http.createServer(function (req, res) {
     //     res.writeHead(301, { "Location": "https://" + req.headers['host'] + req.url });
     //     res.end();
     // });
     // this.https = https.createServer(https_options, this.server);
-    this.http = http.createServer(this.server);
-    this.server.use("/", require("../express"));
+    this.http = http.createServer(app);
+    // this.server.use("/", require("../express"));
     // this.io = new ServerSocket(this.http);
     // require('../express/socket')(this.io);
   }
@@ -34,7 +30,6 @@ class Server {
   build(token) {
     console.warn("Server is starting");
     console.log("Server started...");
-
     // this.https.listen(this.config.httpsPort, (data) =>
     //     this.log(`Web HTTPS Server has been started at ${this.config.httpsPort}`)
     // );
