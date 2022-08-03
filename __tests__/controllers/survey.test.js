@@ -10,7 +10,7 @@ describe("survey.test.js", () => {
     await request(app)
       .post("/api/survey/create")
       .set("userid", 1)
-      .set("token", "abcdef.ghij.klmnop")
+      .set("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY1OTI4NTA3OX0.RTqhn_VeIM0nA0EsBvVQUijaMlxEPi6mCeWrC-DdNLE")
       .send({ questionsList: ["quest1"] })
       .expect(200)
       .expect((res) => {
@@ -27,7 +27,7 @@ describe("survey.test.js", () => {
     await request(app)
       .put("/api/survey/update")
       .set("userid", 1)
-      .set("token", "abcdef.ghij.klmnop")
+      .set("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY1OTI4NTA3OX0.RTqhn_VeIM0nA0EsBvVQUijaMlxEPi6mCeWrC-DdNLE")
       .send({ questionsList: ["quest1"], surveyid: 1 })
       .expect(200)
       .expect((res) => {
@@ -41,7 +41,7 @@ describe("survey.test.js", () => {
     await request(app)
       .delete("/api/survey/1")
       .set("userid", 1)
-      .set("token", "abcdef.ghij.klmnop")
+      .set("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY1OTI4NTA3OX0.RTqhn_VeIM0nA0EsBvVQUijaMlxEPi6mCeWrC-DdNLE")
       .expect(200)
       .expect((res) => {
         expect(res.body.msg).toEqual("survey deleted successfully");
@@ -65,7 +65,7 @@ describe("survey.test.js", () => {
     await request(app)
       .post("/api/survey/fechanswers")
       .set("userid", 1)
-      .set("token", "abcdef.ghij.klmnop")
+      .set("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY1OTI4NTA3OX0.RTqhn_VeIM0nA0EsBvVQUijaMlxEPi6mCeWrC-DdNLE")
       .expect(200)
       .expect((res) => {
         expect(res.body).toEqual(["quest1"]);
@@ -79,7 +79,7 @@ describe("survey.test.js", () => {
     await request(app)
       .get("/api/survey/1")
       .set("userid", 1)
-      .set("token", "abcdef.ghij.klmnop")
+      .set("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY1OTI4NTA3OX0.RTqhn_VeIM0nA0EsBvVQUijaMlxEPi6mCeWrC-DdNLE")
       .expect(200)
       .expect((res) => {
         expect(res.body).toEqual(["quest1"]);
