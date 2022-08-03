@@ -5,6 +5,10 @@ const Role = database.roles;
 const Op = database.Sequelize.Op;
 const jwt = require("jsonwebtoken");
 
+function validateResourceName(token) {
+  return jwt.decode(token, { complete: true });
+}
+
 exports.getlist = (req, res, next) => {
   const adminId = req.params.id;
 
@@ -14,6 +18,10 @@ exports.getlist = (req, res, next) => {
   if (req.headers.token == null) {
     return res.status(401).json({ msg: "Unauthorized" });
   }
+  if (validateResourceName(req.headers.token) == null) {
+    return res.status(401).json({ msg: "Unauthorized" });
+  }
+
   if (
     req.headers.userid !=
     JSON.parse(atob(req.headers.token.split(".")[1])).userId
@@ -42,6 +50,9 @@ exports.getAdmin = (req, res, next) => {
   if (req.headers.token == null) {
     return res.status(401).json({ msg: "Unauthorized" });
   }
+  if (validateResourceName(req.headers.token) == null) {
+    return res.status(401).json({ msg: "Unauthorized" });
+  }
   User.findOne({
     where: { id: adminId },
   })
@@ -62,6 +73,9 @@ exports.delete = (req, res, next) => {
     return res.status(401).json({ msg: "Unauthorized" });
   }
   if (req.headers.token == null) {
+    return res.status(401).json({ msg: "Unauthorized" });
+  }
+  if (validateResourceName(req.headers.token) == null) {
     return res.status(401).json({ msg: "Unauthorized" });
   }
   if (req.headers.userid != 1) {
@@ -101,7 +115,9 @@ exports.udpate = (req, res, next) => {
   if (req.headers.token == null) {
     return res.status(401).json({ msg: "Unauthorized" });
   }
-
+  if (validateResourceName(req.headers.token) == null) {
+    return res.status(401).json({ msg: "Unauthorized" });
+  }
   User.update(
     {
       name: adminName,
@@ -129,6 +145,9 @@ exports.passwordupdate = (req, res, next) => {
     return res.status(401).json({ msg: "Unauthorized" });
   }
   if (req.headers.token == null) {
+    return res.status(401).json({ msg: "Unauthorized" });
+  }
+  if (validateResourceName(req.headers.token) == null) {
     return res.status(401).json({ msg: "Unauthorized" });
   }
   console.log(req.body);
@@ -163,6 +182,9 @@ exports.register = (req, res, next) => {
   if (req.headers.token == null) {
     return res.status(401).json({ msg: "Unauthorized" });
   }
+  if (validateResourceName(req.headers.token) == null) {
+    return res.status(401).json({ msg: "Unauthorized" });
+  }
   if (req.headers.userid != 1) {
     return res.status(400).json({ error: "user is not permitted" });
   }
@@ -173,36 +195,38 @@ exports.register = (req, res, next) => {
     .then((user) => {
       if (user != null) {
         return res.status(400).json({ msg: "user already exist" });
+      } else {
+        Role.findOne({
+          where: {
+            rolename: "admin",
+          },
+        }).then((rolerecord) => {
+          let splitString = "";
+          if (req.body.email != "") {
+            splitString = req.body.email.split("@")[0];
+          }
+          if (splitString === "") {
+            splitString = req.body.email;
+          }
+          const userdata = {
+            name: splitString,
+            email: req.body.email,
+            password: req.body.password,
+            roleId: rolerecord.id,
+          };
+          User.create(userdata)
+            .then((data) => {
+              return res
+                .status(200)
+                .json({ msg: "user registered successfully" });
+            })
+            .catch((e) => {
+              return res.status(400).json({ msg: "user registered failed" });
+            });
+        });
       }
     })
     .catch((e) => {
       return res.json({ msg: "Admins Fetch Failed" });
     });
-
-  Role.findOne({
-    where: {
-      rolename: "admin",
-    },
-  }).then((rolerecord) => {
-    let splitString = "";
-    if (req.body.email != "") {
-      splitString = req.body.email.split("@")[0];
-    }
-    if (splitString === "") {
-      splitString = req.body.email;
-    }
-    const userdata = {
-      name: splitString,
-      email: req.body.email,
-      password: req.body.password,
-      roleId: rolerecord.id,
-    };
-    User.create(userdata)
-      .then((data) => {
-        return res.status(200).json({ msg: "user registered successfully" });
-      })
-      .catch((e) => {
-        return res.status(400).json({ msg: "user registered failed" });
-      });
-  });
 };
