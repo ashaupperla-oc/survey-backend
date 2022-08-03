@@ -4,7 +4,11 @@ const Survey = database.surveys;
 const Question = database.questions;
 const Answer = database.answers;
 const Op = database.Sequelize.Op;
-var randomWords = require("random-words");
+const jwt = require("jsonwebtoken");
+
+function validateResourceName(token) {
+  return jwt.decode(token, { complete: true });
+}
 
 exports.create = (req, res, next) => {
   if (req.headers.userid == null) {
@@ -13,6 +17,9 @@ exports.create = (req, res, next) => {
   if (req.headers.token == null) {
     return res.status(401).json({ msg: "Unauthorized token" });
   }
+  if (validateResourceName(req.headers.token) == null) {
+    return res.status(401).json({ msg: "Unauthorized" });
+  }
 
   const questionList = req.body.questionsList;
   const userId = req.body.userId;
@@ -20,7 +27,6 @@ exports.create = (req, res, next) => {
   if (questionList.length === 0) {
     return res.json({ status: 500, error: "no question selected" });
   } else {
-    let randomWord = randomWords({ exactly: 2, join: "" });
     const data = {
       surveyName: surveyName,
       userId: userId,
@@ -51,6 +57,9 @@ exports.update = (req, res, next) => {
     return res.status(401).json({ msg: "Unauthorized" });
   }
   if (req.headers.token == null) {
+    return res.status(401).json({ msg: "Unauthorized" });
+  }
+  if (validateResourceName(req.headers.token) == null) {
     return res.status(401).json({ msg: "Unauthorized" });
   }
 
@@ -102,6 +111,9 @@ exports.delete = (req, res, next) => {
     return res.status(401).json({ msg: "Unauthorized" });
   }
   if (req.headers.token == null) {
+    return res.status(401).json({ msg: "Unauthorized" });
+  }
+  if (validateResourceName(req.headers.token) == null) {
     return res.status(401).json({ msg: "Unauthorized" });
   }
 
