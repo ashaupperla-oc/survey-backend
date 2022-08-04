@@ -13,20 +13,21 @@ exports.getlist = (req, res, next) => {
   const adminId = req.params.id;
 
   if (req.headers.userid == null) {
-    return res.status(401).json({ msg: "Unauthorized userid" });
+    return res.status(401).json({ msg: "Unauthorized" });
   }
   if (req.headers.token == null) {
-    return res.status(401).json({ msg: "Unauthorized token" });
+    return res.status(401).json({ msg: "Unauthorized" });
   }
   if (validateResourceName(req.headers.token) == null) {
-    return res.status(401).json({ msg: "Unauthorized res val" });
+    return res.status(401).json({ msg: "Unauthorized" });
   }
 
-  // if (
-  //   req.headers.userid !=atob(req.headers.token.split(".")[1]).userId
-  // ) {
-  //   return res.status(401).json({ msg: "Unauthorized user" });
-  // }
+  if (
+    req.headers.userid !=
+    JSON.parse(atob(req.headers.token.split(".")[1])).userId
+  ) {
+    return res.status(401).json({ msg: "Unauthorized" });
+  }
   if (req.headers.userid != 1) {
     return res.status(400).json({ error: "user is not permitted" });
   }
