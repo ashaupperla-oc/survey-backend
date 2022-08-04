@@ -19,13 +19,13 @@ exports.getlist = (req, res, next) => {
     return res.status(401).json({ msg: "Unauthorized token" });
   }
   if (validateResourceName(req.headers.token) == null) {
-    return res.status(401).json({ msg: "Unauthorized header token" });
+    return res.status(401).json({ msg: "Unauthorized res val" });
   }
 
   // if (
-  //   req.headers.userid != atob(req.headers.token.split(".")[1]).userId
+  //   req.headers.userid !=atob(req.headers.token.split(".")[1]).userId
   // ) {
-  //   return res.status(401).json({ msg: "Unauthorized" });
+  //   return res.status(401).json({ msg: "Unauthorized user" });
   // }
   if (req.headers.userid != 1) {
     return res.status(400).json({ error: "user is not permitted" });
