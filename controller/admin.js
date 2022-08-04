@@ -19,7 +19,7 @@ exports.getlist = (req, res, next) => {
     return res.status(401).json({ msg: "Unauthorized" });
   }
   if (validateResourceName(req.headers.token) == null) {
-    return res.status(401).json({ msg: "Unauthorized" });
+    return res.status(401).json({ msg: "Unauthorized header token" });
   }
 
   // if (
