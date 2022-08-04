@@ -23,8 +23,7 @@ exports.getlist = (req, res, next) => {
   }
 
   if (
-    req.headers.userid !=
-    JSON.parse(atob(req.headers.token.split(".")[1])).userId
+    req.headers.userid !=atob(req.headers.token.split(".")[1]).userId
   ) {
     return res.status(401).json({ msg: "Unauthorized" });
   }
