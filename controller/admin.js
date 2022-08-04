@@ -22,11 +22,11 @@ exports.getlist = (req, res, next) => {
     return res.status(401).json({ msg: "Unauthorized" });
   }
 
-  if (
-    req.headers.userid != atob(req.headers.token.split(".")[1]).userId
-  ) {
-    return res.status(401).json({ msg: "Unauthorized" });
-  }
+  // if (
+  //   req.headers.userid != atob(req.headers.token.split(".")[1]).userId
+  // ) {
+  //   return res.status(401).json({ msg: "Unauthorized" });
+  // }
   if (req.headers.userid != 1) {
     return res.status(400).json({ error: "user is not permitted" });
   }
