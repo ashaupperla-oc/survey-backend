@@ -13,10 +13,10 @@ exports.getlist = (req, res, next) => {
   const adminId = req.params.id;
 
   if (req.headers.userid == null) {
-    return res.status(401).json({ msg: "Unauthorized" });
+    return res.status(401).json({ msg: "Unauthorized userid" });
   }
   if (req.headers.token == null) {
-    return res.status(401).json({ msg: "Unauthorized" });
+    return res.status(401).json({ msg: "Unauthorized token" });
   }
   if (validateResourceName(req.headers.token) == null) {
     return res.status(401).json({ msg: "Unauthorized header token" });
