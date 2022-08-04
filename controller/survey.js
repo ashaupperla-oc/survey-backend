@@ -4,21 +4,22 @@ const Survey = database.surveys;
 const Question = database.questions;
 const Answer = database.answers;
 const Op = database.Sequelize.Op;
-var randomWords = require("random-words");
+const jwt = require("jsonwebtoken");
+
+function validateResourceName(token) {
+  return jwt.decode(token, { complete: true });
+}
 
 exports.create = (req, res, next) => {
-  // if (req.headers.userid == null) {
-  //   return res.status(401).json({ msg: "Unauthorized userid" });
-  // }
-  // if (req.headers.token == null) {
-  //   return res.status(401).json({ msg: "Unauthorized token" });
-  // }
-  // if (
-  //   req.headers.userid !=
-  //   JSON.parse(atob(req.headers.token.split(".")[1])).userId
-  // ) {
-  //   return res.status(401).json({ msg: "Unauthorized" });
-  // }
+  if (req.headers.userid == null) {
+    return res.status(401).json({ msg: "Unauthorized userid" });
+  }
+  if (req.headers.token == null) {
+    return res.status(401).json({ msg: "Unauthorized token" });
+  }
+  if (validateResourceName(req.headers.token) == null) {
+    return res.status(401).json({ msg: "Unauthorized" });
+  }
 
   const questionList = req.body.questionsList;
   const userId = req.body.userId;
@@ -26,7 +27,6 @@ exports.create = (req, res, next) => {
   if (questionList.length === 0) {
     return res.json({ status: 500, error: "no question selected" });
   } else {
-    let randomWord = randomWords({ exactly: 2, join: "" });
     const data = {
       surveyName: surveyName,
       userId: userId,
@@ -53,18 +53,15 @@ exports.create = (req, res, next) => {
 };
 
 exports.update = (req, res, next) => {
-  // if (req.headers.userid == null) {
-  //   return res.status(401).json({ msg: "Unauthorized" });
-  // }
-  // if (req.headers.token == null) {
-  //   return res.status(401).json({ msg: "Unauthorized" });
-  // }
-  // if (
-  //   req.headers.userid !=
-  //   JSON.parse(atob(req.headers.token.split(".")[1])).userId
-  // ) {
-  //   return res.status(401).json({ msg: "Unauthorized" });
-  // }
+  if (req.headers.userid == null) {
+    return res.status(401).json({ msg: "Unauthorized" });
+  }
+  if (req.headers.token == null) {
+    return res.status(401).json({ msg: "Unauthorized" });
+  }
+  if (validateResourceName(req.headers.token) == null) {
+    return res.status(401).json({ msg: "Unauthorized" });
+  }
 
   const questionsList = req.body.questionsList;
   var surveyid = req.body.surveyid;
@@ -110,18 +107,15 @@ exports.update = (req, res, next) => {
 };
 
 exports.delete = (req, res, next) => {
-  // if (req.headers.userid == null) {
-  //   return res.status(401).json({ msg: "Unauthorized" });
-  // }
-  // if (req.headers.token == null) {
-  //   return res.status(401).json({ msg: "Unauthorized" });
-  // }
-  // if (
-  //   req.headers.userid !=
-  //   JSON.parse(atob(req.headers.token.split(".")[1])).userId
-  // ) {
-  //   return res.status(401).json({ msg: "Unauthorized" });
-  // }
+  if (req.headers.userid == null) {
+    return res.status(401).json({ msg: "Unauthorized" });
+  }
+  if (req.headers.token == null) {
+    return res.status(401).json({ msg: "Unauthorized" });
+  }
+  if (validateResourceName(req.headers.token) == null) {
+    return res.status(401).json({ msg: "Unauthorized" });
+  }
 
   Survey.destroy({
     where: { id: req.params.id },
@@ -190,7 +184,6 @@ exports.view = (req, res, next) => {
         },
       })
         .then((questions) => {
-          console.log(questions);
           return res.json(questions);
           next();
         })

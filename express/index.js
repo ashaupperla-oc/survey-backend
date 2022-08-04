@@ -1,9 +1,5 @@
-// require('./Auth');
-const { static, Router } = require("express");
-const api = Router();
-const config = require("../config");
-const session = require("express-session");
-
+const express = require("express");
+const app = express();
 const cors = require("cors");
 const bodyParser = require("body-parser");
 
@@ -11,15 +7,14 @@ var corsOptions = {
   origin: "*",
 };
 
-api.use(cors(corsOptions));
-api.options("*", cors());
-api.use(
+app.use(cors(corsOptions));
+app.options("*", cors());
+app.use(
   bodyParser.urlencoded({
     extended: true,
   })
 );
-
-api.use(bodyParser.json());
+app.use(bodyParser.json());
 
 // database connect to mysql
 const database = require("../models");
@@ -27,17 +22,14 @@ const database = require("../models");
 
 database.sequelize.sync();
 
-
 // simple route
-api.get("/", (req, res) => {
-  res.json({ message: "your server api" });
+app.get("/", (req, res) => {
+  res.status(200).json({ message: "your server app" });
 });
 
+require("../routes/auth")(app);
+require("../routes/answer")(app);
+require("../routes/survey")(app);
+require("../routes/admin")(app);
 
-require("../routes/auth")(api);
-require("../routes/answer")(api);
-require("../routes/survey")(api);
-require("../routes/admin")(api);
-
-
-module.exports = api;
+module.exports = app;
